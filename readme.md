@@ -19,9 +19,8 @@ class UserRole extends Enum
 }
 ```
 
-The `EnumArray` class extends the `Enum` class, it differs in that it reads its values from a key value array. All other methods of the `EnumArray` work the same as the `Enum` class.
+or like this:
 
-You can create an enum using the `EnumArray` class like this:
 ```php
 class UserRoleArray extends EnumArray
 {
@@ -32,9 +31,11 @@ class UserRoleArray extends EnumArray
 }
 ```
 
+The `EnumArray` class extends the `Enum` class. They only differ in the way you define the values.
+
 ## Using enums
 You can easily access the constants of the enum in your code. For example, you can use the following code in a middleware:
-```
+```php
 if ($user->role !== UserRole::ADMIN) {
     abort(401);
 }
@@ -66,7 +67,7 @@ UserRole::assert('wrong_role'); // throws a RunTimeException
 ```
 
 ## Tests
-To make sure your enums work like you expect, you can create a unit test for each enum class you create. The tests below could prevent some headaches and lost time: 
+To make sure your enums work like you expect, you can create a unit test for each enum class you create. The tests below could prevent some headaches: 
 
 ```php
 /** @test */
