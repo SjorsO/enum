@@ -19,9 +19,8 @@ class ExamplesTest extends TestCase
     /** @test */
     function all_values_are_unique()
     {
-        $this->assertSame(
-            UserRole::values()->all(),
-            UserRole::values()->unique()->all(),
+        $this->assertTrue(
+            UserRole::values()->all() === UserRole::values()->unique()->all(),
             'Not all enum values are unique'
         );
     }
@@ -29,9 +28,8 @@ class ExamplesTest extends TestCase
     /** @test */
     function the_example_test_fails_if_all_values_are_not_unique()
     {
-        $this->assertNotSame(
-            DuplicateUserRole::values()->all(),
-            DuplicateUserRole::values()->unique()->all()
+        $this->assertFalse(
+            DuplicateUserRole::values()->all() === DuplicateUserRole::values()->unique()->all()
         );
     }
 
@@ -44,9 +42,8 @@ class ExamplesTest extends TestCase
             return strtolower($value) === $value;
         })->values()->all();
 
-        $this->assertSame(
-            $allValues->all(),
-            $lowercaseValues,
+        $this->assertTrue(
+            $allValues->all() === $lowercaseValues,
             'Enum values should all be lowercase'
         );
     }
@@ -60,9 +57,8 @@ class ExamplesTest extends TestCase
             return strtolower($value) === $value;
         })->values()->all();
 
-        $this->assertNotSame(
-            $allValues->all(),
-            $lowercaseValues
+        $this->assertFalse(
+            $allValues->all() === $lowercaseValues
         );
     }
 
@@ -75,9 +71,8 @@ class ExamplesTest extends TestCase
             return strpos($value, ',') === false && strpos($value, '|') === false;
         })->values()->all();
 
-        $this->assertSame(
-            $allValues->all(),
-            $goodValues,
+        $this->assertTrue(
+            $allValues->all() === $goodValues,
             'Enum values should not contain commas or pipes'
         );
     }
@@ -91,9 +86,8 @@ class ExamplesTest extends TestCase
             return strpos($value, ',') === false && strpos($value, '|') === false;
         })->values()->all();
 
-        $this->assertNotSame(
-            $allValues->all(),
-            $goodValues
+        $this->assertFalse(
+            $allValues->all() === $goodValues
         );
     }
 }

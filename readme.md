@@ -81,9 +81,8 @@ To make sure your enums work like you expect, you can create a unit test for eac
 /** @test */
 function all_values_are_unique()
 {
-    $this->assertSame(
-        UserRole::values()->all(),
-        UserRole::values()->unique()->all(),
+    $this->assertTrue(
+        UserRole::values()->all() === UserRole::values()->unique()->all(),
         'Not all enum values are unique'
     );
 }
@@ -97,9 +96,8 @@ function all_values_should_be_lowercase()
         return strtolower($value) === $value;
     })->values()->all();
 
-    $this->assertSame(
-        $allValues->all(),
-        $lowercaseValues,
+    $this->assertTrue(
+        $allValues->all() === $lowercaseValues,
         'Enum values should all be lowercase'
     );
 }
@@ -107,16 +105,14 @@ function all_values_should_be_lowercase()
 /** @test */
 function values_should_not_contain_commas_or_pipes()
 {
-    // Commas or pipes will break the "required()" and "optional()" validation rules.
     $allValues = UserRole::values();
 
     $goodValues = $allValues->filter(function (string $value) {
         return strpos($value, ',') === false && strpos($value, '|') === false;
     })->values()->all();
 
-    $this->assertSame(
-        $allValues->all(),
-        $goodValues,
+    $this->assertTrue(
+        $allValues->all() === $goodValues,
         'Enum values should not contain commas or pipes'
     );
 }
