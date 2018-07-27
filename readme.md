@@ -7,8 +7,6 @@ composer require sjorso/enum
 ```
 
 ## Creating enums
-This package contains two abstract classes: `Enum` and `EnumArray`. They make it easy to define enums and have static methods that make using them simple.
-
 You can create an enum like this:
 ```php
 class UserRole extends Enum
@@ -19,20 +17,6 @@ class UserRole extends Enum
 }
 ```
 
-or like this:
-
-```php
-class UserRoleArray extends EnumArray
-{
-    const VALUES = [
-        'USER'  => 'role_user',
-        'ADMIN' => 'role_admin',
-    ];
-}
-```
-
-The `EnumArray` class extends the `Enum` class. They only differ in the way you define the values.
-
 ## Using enums
 You can easily access the constants of the enum in your code. For example, you can use the following code in a middleware:
 ```php
@@ -41,6 +25,13 @@ if ($user->role !== UserRole::ADMIN) {
 }
 
 return $next($request);
+```
+
+You can pass enum values to a view like this:
+```php
+return view('admin.user.edit', [    
+    'roles' => UserRole::values(), // returns a Collection
+]);
 ```
 
 The `Enum` class has two useful methods for generating validation rules:
@@ -54,7 +45,7 @@ $request->validate([
 If you want to return an enum in an api response, you can do the following:
 ```php
 // returns an "Illuminate\Http\Resources\Json\JsonResource" containing the enum values
-return UserRole::apiResponse(); 
+return UserRole::apiResource(); 
 ```
 
 There are two methods for checking if an enum value is valid:
@@ -64,6 +55,25 @@ UserRole::has('wrong_role'); // false
 
 UserRole::assert('role_user'); // returns void
 UserRole::assert('wrong_role'); // throws a RunTimeException
+```
+
+## Enum arrays
+This package also contains an abstract `EnumArray` class. The `EnumArray` class extends the `Enum` class. When using an enum array you can't access individual constants, but all the static methods still work. 
+
+You can create an enum array like this:
+```php
+class Timezone extends EnumArray
+{
+    const VALUES = [
+        'Africa/Abidjan',
+        'Africa/Accra',
+        'Africa/Addis_Ababa',
+        'Africa/Algiers',
+        'Africa/Asmara',
+        'Africa/Bamako',
+        // etc..
+    ];
+}
 ```
 
 ## Tests
