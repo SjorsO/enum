@@ -18,13 +18,11 @@ class UserRole extends Enum
 ```
 
 ## Using enums
-You can easily access the constants of the enum in your code. For example, you can use the following code in a middleware:
+You can access the values of the enum in your code:
 ```php
 if ($user->role !== UserRole::ADMIN) {
     abort(401);
 }
-
-return $next($request);
 ```
 
 You can pass enum values to a view like this:
