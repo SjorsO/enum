@@ -9,6 +9,8 @@ composer require sjorso/enum
 ## Creating enums
 You can create an enum like this:
 ```php
+use SjorsO\Enum\Enum;
+
 class UserRole extends Enum
 {
     const USER = 'role_user';
@@ -25,14 +27,14 @@ if ($user->role !== UserRole::ADMIN) {
 }
 ```
 
-You can pass enum values to a view like this:
+You can get all enum values as a Laravel collection by calling `all()`. A good usecase for this is passing the enum values to a view, so they can be used in a select input:
 ```php
 return view('admin.user.edit', [    
-    'roles' => UserRole::values(), // returns a Collection
+    'roles' => UserRole::values(),
 ]);
 ```
 
-The `Enum` class has two useful methods for generating validation rules:
+The `Enum` class offers two methods for generating validation rules:
 ```php
 $request->validate([
     'role' => UserRole::required(), // 'required|in:role_user,role_admin'    
@@ -71,50 +73,6 @@ class Timezone extends EnumArray
         'Africa/Bamako',
         // etc..
     ];
-}
-```
-
-## Tests
-To make sure your enums work like you expect, you can create a unit test for each enum class you create. The tests below could prevent some headaches: 
-
-```php
-/** @test */
-function all_values_are_unique()
-{
-    $this->assertTrue(
-        UserRole::values()->all() === UserRole::values()->unique()->all(),
-        'Not all enum values are unique'
-    );
-}
-
-/** @test */
-function all_values_should_be_lowercase()
-{
-    $allValues = UserRole::values();
-
-    $lowercaseValues = $allValues->filter(function (string $value) {
-        return strtolower($value) === $value;
-    })->values()->all();
-
-    $this->assertTrue(
-        $allValues->all() === $lowercaseValues,
-        'Enum values should all be lowercase'
-    );
-}
-
-/** @test */
-function values_should_not_contain_commas_or_pipes()
-{
-    $allValues = UserRole::values();
-
-    $goodValues = $allValues->filter(function (string $value) {
-        return strpos($value, ',') === false && strpos($value, '|') === false;
-    })->values()->all();
-
-    $this->assertTrue(
-        $allValues->all() === $goodValues,
-        'Enum values should not contain commas or pipes'
-    );
 }
 ```
 
