@@ -1,5 +1,5 @@
 # Enum
-A useful abstract class for making enums in Laravel.
+An abstract class for making enums in Laravel.
 
 ## Install
 ```bash
@@ -27,9 +27,9 @@ if ($user->role !== UserRole::ADMIN) {
 }
 ```
 
-You can get all enum values as a Laravel collection by calling `all()`. A good usecase for this is passing the enum values to a view, so they can be used in a select input:
+You can get all enum values as a Laravel collection by calling `all()`. A good use case for this is passing the enum values to a view, so they can be used in a select input:
 ```php
-return view('admin.user.edit', [    
+return view('admin.user.edit', [
     'roles' => UserRole::values(),
 ]);
 ```
