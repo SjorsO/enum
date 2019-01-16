@@ -2,11 +2,9 @@
 
 namespace SjorsO\Enum\Tests;
 
-use Exception;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Collection;
 use PHPUnit\Framework\TestCase;
-use RuntimeException;
 use SjorsO\Enum\Enum;
 use SjorsO\Enum\Tests\Examples\UserRole;
 
@@ -100,27 +98,17 @@ class EnumTest extends TestCase
     /** @test */
     function it_can_assert_that_a_value_exists()
     {
-        try {
-            $this->userRole::assert('role_admin');
-        } catch (Exception $exception) {
-            $this->fail('Unexpected exception thrown');
-        }
+        $returnValue = $this->userRole::assert('role_admin');
 
-        $this->assertTrue(true);
+        $this->assertSame('role_admin', $returnValue);
     }
 
     /** @test */
     function it_throws_an_exception_when_the_assertion_fails()
     {
-        try {
-            $this->userRole::assert('role_unknown');
-        } catch (RuntimeException $exception) {
-            $this->assertStringEndsWith(' enum: role_unknown', $exception->getMessage());
+        $this->expectExceptionMessageRegExp('/ enum: role_unknown/');
 
-            return;
-        } catch (Exception $exception) {
-
-        }
+        $this->userRole::assert('role_unknown');
 
         $this->fail('Excepted a RunTimeException to be thrown');
     }

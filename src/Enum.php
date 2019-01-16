@@ -55,5 +55,7 @@ abstract class Enum
         if (! static::has($string)) {
             throw new RuntimeException('Not a valid '.static::class.' enum: '.$string);
         }
+
+        return $string;
     }
 }
