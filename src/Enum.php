@@ -23,6 +23,9 @@ abstract class Enum
         return new Collection($constants);
     }
 
+    /**
+     * @return \Illuminate\Support\Collection
+     */
     public static function values()
     {
         return static::all()->values();
