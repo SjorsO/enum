@@ -13,7 +13,7 @@ class EnumTest extends TestCase
     /** @var $userRole Enum */
     protected $userRole;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

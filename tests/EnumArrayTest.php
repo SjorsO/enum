@@ -10,7 +10,7 @@ class EnumArrayTest extends EnumTest
     /** @var $userRole EnumArray */
     protected $userRole;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
