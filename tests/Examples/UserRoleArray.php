@@ -10,4 +10,8 @@ class UserRoleArray extends EnumArray
         'USER'  => 'role_user',
         'ADMIN' => 'role_admin',
     ];
+
+    private const NOT_THIS_ONE = 'private_value';
+
+    protected const ALSO_NOT_THIS_ONE = 'protected_value';
 }

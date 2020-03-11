@@ -18,9 +18,15 @@ abstract class Enum
     {
         $reflection = new ReflectionClass(static::class);
 
-        $constants = $reflection->getConstants();
+        $collection = new Collection();
 
-        return new Collection($constants);
+        foreach ($reflection->getReflectionConstants() as $constant) {
+            if ($constant->isPublic()) {
+                $collection[$constant->getName()] = $constant->getValue();
+            }
+        }
+
+        return $collection;
     }
 
     /**
