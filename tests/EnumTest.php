@@ -106,7 +106,7 @@ class EnumTest extends TestCase
     /** @test */
     function it_throws_an_exception_when_the_assertion_fails()
     {
-        $this->expectExceptionMessageRegExp('/ enum: role_unknown/');
+        $this->expectExceptionMessageMatches('/ enum: role_unknown/');
 
         $this->userRole::assert('role_unknown');
 
