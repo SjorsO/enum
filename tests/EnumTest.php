@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Collection;
 use PHPUnit\Framework\TestCase;
 use SjorsO\Enum\Enum;
+use SjorsO\Enum\Tests\Examples\NumericEnum;
 use SjorsO\Enum\Tests\Examples\UserRole;
 
 class EnumTest extends TestCase
@@ -111,5 +112,23 @@ class EnumTest extends TestCase
         $this->userRole::assert('role_unknown');
 
         $this->fail('Excepted a RunTimeException to be thrown');
+    }
+
+    /** @test */
+    function enum_has_is_strict()
+    {
+        $this->assertTrue(NumericEnum::has(0));
+        $this->assertFalse(NumericEnum::has('0'));
+        $this->assertFalse(NumericEnum::has(null));
+        $this->assertFalse(NumericEnum::has(false));
+
+        $this->assertTrue(NumericEnum::has(1));
+        $this->assertFalse(NumericEnum::has('1'));
+        $this->assertFalse(NumericEnum::has(true));
+
+        $this->assertFalse(NumericEnum::has(2)); // 2 is protected
+        $this->assertFalse(NumericEnum::has('2')); // 2 is protected
+        $this->assertFalse(NumericEnum::has(3)); // 3 is private
+        $this->assertFalse(NumericEnum::has('3')); // 3 is private
     }
 }
