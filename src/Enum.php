@@ -39,7 +39,7 @@ abstract class Enum
 
     public static function has($string): bool
     {
-        return static::all()->contains($string);
+        return static::all()->containsStrict($string);
     }
 
     public static function required()
