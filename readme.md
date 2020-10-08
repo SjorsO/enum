@@ -76,6 +76,18 @@ class Timezone extends EnumArray
 }
 ```
 
+## Ensuring all enum values are unique
+Generally, all enum values should be unique. Adding a unit test for each of your enums can ensure that you haven't defined any duplicate values:
+```php
+function test_all_enum_values_are_unique()
+{
+    $this->assertSame(
+        UserRole::values()->toArray(),
+        UserRole::values()->unique()->toArray()
+    );
+}
+``` 
+
 ## License
 
 This project is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
